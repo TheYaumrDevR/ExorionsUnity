@@ -8,44 +8,52 @@ namespace Org.Ethasia.Evocri.Core
         private IndividualExorion enemyTeamOne;
         private IndividualExorion enemyTeamTwo;
 
-        private Action<List<IndividualExorion>> battleActionTeamOne;
-        private Action<List<IndividualExorion>> battleActionTeamTwo;
+        private BattleCommand battleActionTeamOne;
+        private BattleCommand battleActionTeamTwo;
 
         public void StartBattle(IndividualExorion enemyTeamOne, IndividualExorion enemyTeamTwo)
         {
 
         }
 
-        public void InputCommandTeamOne(Action<List<IndividualExorion>> battleAction)
+        public void InputCommandTeamOne(BattleCommand battleAction)
         {
             if (null == battleActionTeamOne)
             {
                 battleActionTeamOne = battleAction;
+                ExecuteQueuedBattleActions();
             }
-            
-            ExecuteQueuedBattleActions();
-            // Check speed value when executing.
-            // Use the command instead of Action
             // Use builders to create commands
             // Write Unit Tests
             // Incorporate crit chance
         }
 
-        public void InputCommandTeamTwo(Action<List<IndividualExorion>> battleAction)
+        public void InputCommandTeamTwo(BattleCommand battleAction)
         {
             if (null == battleActionTeamTwo)
             {
                 battleActionTeamTwo = battleAction;
+                ExecuteQueuedBattleActions();
             }
-
-            ExecuteQueuedBattleActions();
         }
 
         private void ExecuteQueuedBattleActions()
         {
             if (null != battleActionTeamOne && null != battleActionTeamTwo)
             {
+                if (battleActionTeamOne.GetActionSpeed() >= battleActionTeamTwo.GetActionSpeed())
+                {
+                    battleActionTeamOne.Execute();
+                    battleActionTeamTwo.Execute();
+                }
+                else
+                {
+                    battleActionTeamTwo.Execute();
+                    battleActionTeamOne.Execute();
+                }
 
+                battleActionTeamOne = null;
+                battleActionTeamTwo = null;
             }
         }
     }

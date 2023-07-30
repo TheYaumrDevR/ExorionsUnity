@@ -7,11 +7,17 @@ namespace Org.Ethasia.Evocri.Core
         public int Damage
         {
             get;
+            private set;
         }
 
         public BattleAbility(int damage)
         {
             Damage = damage;
+        }
+
+        public int CalculateActionSpeed(IndividualExorion source)
+        {
+            return source.AttackSpeed;
         }
 
         public void Use(List<IndividualExorion> enemies)

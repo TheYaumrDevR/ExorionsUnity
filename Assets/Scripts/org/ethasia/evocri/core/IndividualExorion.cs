@@ -5,7 +5,12 @@ namespace Org.Ethasia.Evocri.Core
     public class IndividualExorion
     {
         private int maxHp;
-        private int currentHp;
+        public int CurrentHp
+        {
+            get;
+            private set;
+        }
+
         public int AttackSpeed
         {
             get;
@@ -17,12 +22,22 @@ namespace Org.Ethasia.Evocri.Core
         public IndividualExorion()
         {
             maxHp = 150;
-            currentHp = 150;
+            CurrentHp = 150;
         }
 
         public void EquipAbilityOnSlotOne(BattleAbility ability)
         {
             abilitySlotOne = ability;
+        }
+
+        public int CalculateSlotOneAbilityActionSpeed()
+        {
+            if (null != abilitySlotOne)
+            {
+                return abilitySlotOne.CalculateActionSpeed(this);
+            }
+
+            return 0;
         }
         
         public void UseSlotOneAbility(List<IndividualExorion> targets)
@@ -35,11 +50,11 @@ namespace Org.Ethasia.Evocri.Core
 
         public void ReceiveDamage(int damage)
         {
-            currentHp = currentHp - damage;
+            CurrentHp = CurrentHp - damage;
 
-            if (currentHp < 0)
+            if (CurrentHp < 0)
             {
-                currentHp = 0;
+                CurrentHp = 0;
             }
         }
     }

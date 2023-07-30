@@ -23,8 +23,17 @@ namespace Org.Ethasia.Evocri
             enemyTeamOne.EquipAbilityOnSlotOne(testAbilityOne);
             enemyTeamTwo.EquipAbilityOnSlotOne(testAbilityTwo);
 
+            List<IndividualExorion> teamOne = new List<IndividualExorion> { enemyTeamOne };
+            List<IndividualExorion> teamTwo = new List<IndividualExorion> { enemyTeamTwo };
+
+            UseBattleAbilityOnSlotOneCommand battleCommandTeamOne = new UseBattleAbilityOnSlotOneCommand(teamTwo, enemyTeamOne);
+            UseBattleAbilityOnSlotOneCommand battleCommandTeamTwo = new UseBattleAbilityOnSlotOneCommand(teamOne, enemyTeamTwo);
+
             Battle testBattle = new Battle();
             testBattle.StartBattle(enemyTeamOne, enemyTeamTwo);
+
+            testBattle.InputCommandTeamOne(battleCommandTeamOne);
+            testBattle.InputCommandTeamTwo(battleCommandTeamTwo);
         }
 
         void Update()

@@ -4,17 +4,19 @@ namespace Org.Ethasia.Evocri.Core
 {
     public class UseBattleAbilityOnSlotOneCommand : BattleCommand
     {
-        public IndividualExorion Source
-        {
-            set;
-            private get;
-        }
-
-        public UseBattleAbilityOnSlotOneCommand(List<IndividualExorion> targets) : base(targets) {}
+        public UseBattleAbilityOnSlotOneCommand(List<IndividualExorion> targets, IndividualExorion source) : base(targets, source) {}
 
         public override void Execute()
         {
-            Source.UseSlotOneAbility(targets);
+            if (source.CurrentHp > 0)
+            {
+                source.UseSlotOneAbility(targets);
+            }
+        }
+
+        public override int GetActionSpeed()
+        {
+            return source.CalculateSlotOneAbilityActionSpeed();
         }
     }
 }

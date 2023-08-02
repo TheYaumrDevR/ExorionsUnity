@@ -23,7 +23,6 @@ namespace Org.Ethasia.Evocri.Core
                 battleActionTeamOne = battleAction;
                 ExecuteQueuedBattleActions();
             }
-            // Use builders to create commands
             // Write Unit Tests
             // Incorporate crit chance
         }

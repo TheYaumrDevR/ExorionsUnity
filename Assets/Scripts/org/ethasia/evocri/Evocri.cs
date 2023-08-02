@@ -11,11 +11,22 @@ namespace Org.Ethasia.Evocri
 
         void Start()
         {
-            IndividualExorion enemyTeamOne = new IndividualExorion();
-            IndividualExorion enemyTeamTwo = new IndividualExorion();
+            IndividualExorionStats exorionOneStats = new IndividualExorionStats
+                .IndividualExorionStatsBuilder()
+                .SetMaxHp(50)
+                .SetCurrentHp(50)
+                .SetAttackSpeed(120)
+                .Build();
 
-            enemyTeamOne.AttackSpeed = 120;
-            enemyTeamTwo.AttackSpeed = 170;
+            IndividualExorionStats exorionTwoStats = new IndividualExorionStats
+                .IndividualExorionStatsBuilder()
+                .SetMaxHp(50)
+                .SetCurrentHp(50)
+                .SetAttackSpeed(170)
+                .Build();                
+
+            IndividualExorion enemyTeamOne = new IndividualExorion(exorionOneStats);
+            IndividualExorion enemyTeamTwo = new IndividualExorion(exorionTwoStats);
 
             BattleAbility testAbilityOne = new BattleAbility(23);
             BattleAbility testAbilityTwo = new BattleAbility(15);

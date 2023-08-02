@@ -15,9 +15,9 @@ namespace Org.Ethasia.Evocri.Core
             Damage = damage;
         }
 
-        public int CalculateActionSpeed(IndividualExorion source)
+        public int CalculateActionSpeed(IndividualExorionStats sourceStats)
         {
-            return source.AttackSpeed;
+            return sourceStats.AttackSpeed;
         }
 
         public void Use(List<IndividualExorion> enemies)

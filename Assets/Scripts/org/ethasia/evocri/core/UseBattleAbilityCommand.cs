@@ -8,10 +8,7 @@ namespace Org.Ethasia.Evocri.Core
 
         public override void Execute()
         {
-            if (source.CurrentHp > 0)
-            {
-                source.UseSlotOneAbility(targets);
-            }
+            source.UseSlotOneAbility(targets);
         }
 
         public override int GetActionSpeed()

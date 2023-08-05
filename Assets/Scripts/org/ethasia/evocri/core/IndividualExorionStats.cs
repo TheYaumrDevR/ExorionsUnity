@@ -1,6 +1,6 @@
 namespace Org.Ethasia.Evocri.Core
 {
-    public struct IndividualExorionStats
+    public class IndividualExorionStats
     {
         private int maxHp;
         public int CurrentHp

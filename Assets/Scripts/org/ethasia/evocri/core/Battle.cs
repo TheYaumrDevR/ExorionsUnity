@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace Org.Ethasia.Evocri.Core
 {
     public class Battle
@@ -13,7 +10,8 @@ namespace Org.Ethasia.Evocri.Core
 
         public void StartBattle(IndividualExorion enemyTeamOne, IndividualExorion enemyTeamTwo)
         {
-
+            this.enemyTeamOne = enemyTeamOne;
+            this.enemyTeamTwo = enemyTeamTwo;
         }
 
         public void InputCommandTeamOne(BattleCommand battleAction)
@@ -23,7 +21,8 @@ namespace Org.Ethasia.Evocri.Core
                 battleActionTeamOne = battleAction;
                 ExecuteQueuedBattleActions();
             }
-            // Write Unit Tests
+
+            // End battle when one team faints
             // Incorporate crit chance
         }
 

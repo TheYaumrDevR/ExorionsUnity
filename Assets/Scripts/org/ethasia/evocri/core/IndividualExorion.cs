@@ -4,12 +4,17 @@ namespace Org.Ethasia.Evocri.Core
 {
     public class IndividualExorion
     {
-        private IndividualExorionStats stats;
+        public IndividualExorionStats Stats
+        {
+            get;
+            private set;
+        }
+
         private BattleAbility abilitySlotOne;
 
         public IndividualExorion(IndividualExorionStats stats)
         {
-            this.stats = stats;
+            Stats = stats;
         }
 
         public void EquipAbilityOnSlotOne(BattleAbility ability)
@@ -21,7 +26,7 @@ namespace Org.Ethasia.Evocri.Core
         {
             if (null != abilitySlotOne)
             {
-                return abilitySlotOne.CalculateActionSpeed(stats);
+                return abilitySlotOne.CalculateActionSpeed(Stats);
             }
 
             return 0;
@@ -29,7 +34,7 @@ namespace Org.Ethasia.Evocri.Core
         
         public void UseSlotOneAbility(List<IndividualExorion> targets)
         {
-            if (null != abilitySlotOne && stats.CurrentHp > 0)
+            if (null != abilitySlotOne && Stats.CurrentHp > 0)
             {
                 abilitySlotOne.Use(targets);
             }
@@ -37,7 +42,7 @@ namespace Org.Ethasia.Evocri.Core
 
         public void ReceiveDamage(int damage)
         {
-            stats.SubtractDamage(damage);
+            Stats.SubtractDamage(damage);
         }
     }
 }

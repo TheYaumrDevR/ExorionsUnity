@@ -8,27 +8,34 @@ namespace Org.Ethasia.Evocri.Core
         private BattleCommand battleActionTeamOne;
         private BattleCommand battleActionTeamTwo;
 
+        public bool BattleHasEnded
+        {
+            get;
+            private set;
+        }
+
         public void StartBattle(IndividualExorion enemyTeamOne, IndividualExorion enemyTeamTwo)
         {
             this.enemyTeamOne = enemyTeamOne;
             this.enemyTeamTwo = enemyTeamTwo;
+            BattleHasEnded = false;
         }
 
         public void InputCommandTeamOne(BattleCommand battleAction)
         {
-            if (null == battleActionTeamOne)
+            if (null == battleActionTeamOne && !BattleHasEnded)
             {
                 battleActionTeamOne = battleAction;
                 ExecuteQueuedBattleActions();
             }
 
-            // End battle when one team faints
             // Incorporate crit chance
+            // Add battle log
         }
 
         public void InputCommandTeamTwo(BattleCommand battleAction)
         {
-            if (null == battleActionTeamTwo)
+            if (null == battleActionTeamTwo && !BattleHasEnded) 
             {
                 battleActionTeamTwo = battleAction;
                 ExecuteQueuedBattleActions();
@@ -48,6 +55,11 @@ namespace Org.Ethasia.Evocri.Core
                 {
                     battleActionTeamTwo.Execute();
                     battleActionTeamOne.Execute();
+                }
+
+                if (0 == enemyTeamOne.Stats.CurrentHp || 0 == enemyTeamTwo.Stats.CurrentHp) 
+                {
+                    BattleHasEnded = true;
                 }
 
                 battleActionTeamOne = null;

@@ -61,7 +61,59 @@ namespace Org.Ethasia.Evocri.Core
         }
 
 
-        private void StartBattleWithStats(IndividualExorionStats exorionOneStats, IndividualExorionStats exorionTwoStats)
+        [Test]
+        public void TestBattleEndsWhenHpReachesZero()
+        {
+            IndividualExorionStats exorionOneStats = new IndividualExorionStats
+                .IndividualExorionStatsBuilder()
+                .SetMaxHp(50)
+                .SetCurrentHp(50)
+                .SetAttackSpeed(120)
+                .Build();
+
+            IndividualExorionStats exorionTwoStats = new IndividualExorionStats
+                .IndividualExorionStatsBuilder()
+                .SetMaxHp(50)
+                .SetCurrentHp(50)
+                .SetAttackSpeed(170)
+                .Build();                
+
+            IndividualExorion enemyTeamOne = new IndividualExorion(exorionOneStats);
+            IndividualExorion enemyTeamTwo = new IndividualExorion(exorionTwoStats);
+
+            BattleAbility testAbilityOne = new BattleAbility(23);
+            BattleAbility testAbilityTwo = new BattleAbility(15);
+
+            enemyTeamOne.EquipAbilityOnSlotOne(testAbilityOne);
+            enemyTeamTwo.EquipAbilityOnSlotOne(testAbilityTwo);
+
+            List<IndividualExorion> teamOne = new List<IndividualExorion> { enemyTeamOne };
+            List<IndividualExorion> teamTwo = new List<IndividualExorion> { enemyTeamTwo };
+
+            UseBattleAbilityOnSlotOneCommand battleCommandTeamOne = new UseBattleAbilityOnSlotOneCommand(teamTwo, enemyTeamOne);
+            UseBattleAbilityOnSlotOneCommand battleCommandTeamTwo = new UseBattleAbilityOnSlotOneCommand(teamOne, enemyTeamTwo);
+
+            Battle testBattle = new Battle();
+            testBattle.StartBattle(enemyTeamOne, enemyTeamTwo);
+
+            testBattle.InputCommandTeamOne(battleCommandTeamOne);
+            testBattle.InputCommandTeamTwo(battleCommandTeamTwo);  
+
+            Assert.That(testBattle.BattleHasEnded, Is.EqualTo(false));
+
+            testBattle.InputCommandTeamOne(battleCommandTeamOne);
+            testBattle.InputCommandTeamTwo(battleCommandTeamTwo);     
+
+            Assert.That(testBattle.BattleHasEnded, Is.EqualTo(false));     
+
+            testBattle.InputCommandTeamOne(battleCommandTeamOne);
+            testBattle.InputCommandTeamTwo(battleCommandTeamTwo);   
+
+            Assert.That(testBattle.BattleHasEnded, Is.EqualTo(true));                
+        }        
+
+
+        private Battle StartBattleWithStats(IndividualExorionStats exorionOneStats, IndividualExorionStats exorionTwoStats)
         {
             IndividualExorion enemyTeamOne = new IndividualExorion(exorionOneStats);
             IndividualExorion enemyTeamTwo = new IndividualExorion(exorionTwoStats);
@@ -82,7 +134,9 @@ namespace Org.Ethasia.Evocri.Core
             testBattle.StartBattle(enemyTeamOne, enemyTeamTwo);
 
             testBattle.InputCommandTeamOne(battleCommandTeamOne);
-            testBattle.InputCommandTeamTwo(battleCommandTeamTwo);               
+            testBattle.InputCommandTeamTwo(battleCommandTeamTwo);        
+
+            return testBattle;       
         }
     }
 }
